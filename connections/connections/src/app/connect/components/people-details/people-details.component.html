@@ -3,22 +3,22 @@
     currentTheme === 'light' ? 'people-details' : 'people-details-dark'
   ">
   <div class="people-details__title">People conversation</div>
-  <button (click)="deletePeopleDialog()" class="people-details__btn">X</button>
+  <button (click)="deletePeopleDialog()" class="people-details__btn-closed">X</button>
   <div class="people-details__header">
-    <div class="people-details__box-update">
+    <div class="update-block">
       <button
         [disabled]="timerPeopleSubscription | async"
         (click)="updateMessage()"
         [class]="
           (timerPeopleSubscription | async)
-            ? 'people-details__btn-disabled'
-            : 'people-details__btn_update'
+            ? 'update-block__btn-disabled'
+            : 'update-block__btn_update'
         ">
         <div
           [class]="
             (timerPeopleSubscription | async)
-              ? 'people-details__btn-img-disabled'
-              : 'people-details__btn-update-img'
+              ? 'update-block__btn-img-disabled'
+              : 'update-block__btn-update-img'
           "></div>
       </button>
       <p>Update message:</p>
@@ -26,11 +26,11 @@
         {{ timerPeopleSubscription | async }} second
       </div>
     </div>
-    <a class="people-details__link" [routerLink]="['/']">Go to Home</a>
+    <a [routerLink]="['/']">Go to Home</a>
   </div>
 
   <div class="people-details__main">
-    <ul *ngIf="peopleMessage$ | async as message" class="people-details__list">
+    <ul *ngIf="peopleMessage$ | async as message">
       <li
         *ngFor="let item of message | dateSort"
         [ngClass]="item.authorID.S === uid ? 'message' : 'message-outside'"
@@ -54,15 +54,13 @@
   <div class="people-details__footer">
     <form
       *ngIf="peopleMessageForm"
-      class="people-details__form"
       [formGroup]="peopleMessageForm">
-      <label class="people-details__label" for="people-message"></label>
+      <label for="people-message"></label>
       <input
         placeholder="Enter the message"
         formControlName="peopleMessageControl"
         id="people-message"
-        type="text"
-        class="people-details__input" />
+        type="text"/>
       <button
         [ngClass]="
           peopleMessageControl.invalid
@@ -70,23 +68,22 @@
             : 'people-details__btn-message'
         "
         (click)="createMessage()"
-        [disabled]="peopleMessageControl.invalid"
-        class="people-details__btn-message">
+        [disabled]="peopleMessageControl.invalid">
         Add
       </button>
     </form>
   </div>
-  <div class="people-details__popup-delete" *ngIf="isShowDeletePeopleDialog">
+  <div class="popup-delete" *ngIf="isShowDeletePeopleDialog">
     <p>Are you sure?</p>
-    <div class="people-details__popup-box-btn">
+    <div class="popup-delete__box-btn">
       <button
         (click)="confirmDeletePeopleDialog(currentPeopleId)"
-        class="people-details__popup-btn">
+        class="popup-delete__btn">
         Yes
       </button>
       <button
         (click)="noConfirmDeletePeopleDialog()"
-        class="people-details__popup-btn">
+        class="popup-delete__btn">
         No
       </button>
     </div>

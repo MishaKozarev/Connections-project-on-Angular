@@ -2,21 +2,16 @@
   [ngClass]="currentTheme === 'light' ? 'people' : 'people-dark'"
   class="people">
   <h2 class="people__title">People</h2>
-  <div class="people__header">
-    <div class="people__box-update">
+  <div class="block-control">
+    <div class="block-control__update">
       <button
         [disabled]="timerPeopleSubscription | async"
-        (click)="updatePeople()"
-        [class]="
-          (timerPeopleSubscription | async)
-            ? 'people__btn-disabled'
-            : 'people__btn_update'
-        ">
+        (click)="updatePeople()">
         <div
           [class]="
             (timerPeopleSubscription | async)
-              ? 'people__btn-img-disabled'
-              : 'people__btn-update-img'
+              ? 'img-update-disabled'
+              : 'img-update'
           "></div>
       </button>
       <p>Update people:</p>
@@ -25,15 +20,14 @@
       </div>
     </div>
   </div>
-  <div class="people__main">
-    <ul *ngIf="peopleList$ | async as peopleList" class="people__list">
+  <div class="field">
+    <ul *ngIf="peopleList$ | async as peopleList" class="field__list">
       <li
         *ngFor="let item of peopleList"
         [ngClass]="{
-          people__companions:
+          companions_item:
             item.uid.S | companionsColorPipe: peopleConversationList
-        }"
-        class="people__item">
+        }">
         <button
           (click)="openPeopleConversation(item.uid.S)"
           class="people__btn-link">

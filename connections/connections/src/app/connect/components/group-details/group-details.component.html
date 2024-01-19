@@ -1,24 +1,23 @@
 <div
   [ngClass]="currentTheme === 'light' ? 'group-details' : 'group-details-dark'">
-  <div class="group-details__title">Group conversation</div>
-  <button *ngIf="isMyGroup" (click)="deleteGroup()" class="group-details__btn">
-    X
-  </button>
+  <h2 class="group-details__title">Group conversation</h2>
+  <button *ngIf="isMyGroup" (click)="deleteGroup()" class="group-details__btn-closed">X</button>
+
   <div class="group-details__header">
-    <div class="group-details__box-update">
+    <div class="update-block">
       <button
         [disabled]="timerGroupSubscription | async"
         (click)="updateMessage()"
         [class]="
           (timerGroupSubscription | async)
-            ? 'group-details__btn-disabled'
-            : 'group-details__btn_update'
+            ? 'update-block__btn-disabled'
+            : 'update-block__btn_update'
         ">
         <div
           [class]="
             (timerGroupSubscription | async)
-              ? 'group-details__btn-img-disabled'
-              : 'group-details__btn-update-img'
+              ? 'update-block__btn-img-disabled'
+              : 'update-block__btn-update-img'
           "></div>
       </button>
       <p>Update message:</p>
@@ -64,11 +63,6 @@
         type="text"
         class="group-details__input" />
       <button
-        [ngClass]="
-          groupMessageControl.invalid
-            ? 'group-details__btn-message-error'
-            : 'group-details__btn-message'
-        "
         (click)="createMessage()"
         [disabled]="groupMessageControl.invalid"
         class="group-details__btn-message">
@@ -76,15 +70,15 @@
       </button>
     </form>
   </div>
-  <div class="group-details__popup-delete" *ngIf="isShowDeleteGroup">
+  <div class="popup-delete" *ngIf="isShowDeleteGroup">
     <p>Are you sure?</p>
-    <div class="group-details__popup-box-btn">
+    <div class="popup-delete__box-btn">
       <button
         (click)="confirmDeleteGroup(currentId)"
-        class="group-details__popup-btn">
+        class="popup-delete__btn">
         Yes
       </button>
-      <button (click)="noConfirmDeleteGroup()" class="group-details__popup-btn">
+      <button (click)="noConfirmDeleteGroup()" class="popup-delete__btn">
         No
       </button>
     </div>

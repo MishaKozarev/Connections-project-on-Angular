@@ -2,21 +2,16 @@
   [ngClass]="currentTheme === 'light' ? 'group' : 'group-dark'"
   class="group">
   <h2 class="group__title">Groups</h2>
-  <div class="group__header">
-    <div class="group__box-update">
+  <div class="block-control">
+    <div class="block-control__update">
       <button
         [disabled]="timerGroupSubscription | async"
-        (click)="updateGroup()"
-        [class]="
-          (timerGroupSubscription | async)
-            ? 'group__btn-disabled'
-            : 'group__btn_update'
-        ">
+        (click)="updateGroup()">
         <div
           [class]="
             (timerGroupSubscription | async)
-              ? 'group__btn-img-disabled'
-              : 'group__btn-update-img'
+              ? 'img-update-disabled'
+              : 'img-update'
           "></div>
       </button>
       <p>Update group:</p>
@@ -24,32 +19,31 @@
         {{ timerGroupSubscription | async }} second
       </div>
     </div>
-    <div class="group__box-create">
-      <button (click)="showForm()" class="group__btn_add">
-        <div class="group__btn-add-img"></div>
+    <div class="block-control__create">
+      <button (click)="showForm()">
+        <div class="img-add"></div>
       </button>
       <p>Create new group</p>
     </div>
-    <div *ngIf="isShowForm" class="group__form-container">
+
+    <div *ngIf="isShowForm" class="popup-create">
       <form
         *ngIf="groupNameForm"
-        class="group__form"
         [formGroup]="groupNameForm">
-        <label class="group__label" for="group-name"></label>
+        <label for="group-name"></label>
         <input
           placeholder="Enter the group name"
           formControlName="nameGroup"
           id="group-name"
-          type="text"
-          class="group__input" />
+          type="text"/>
         <button
           (click)="createGroup()"
-          [disabled]="nameGroup.invalid"
-          class="group__btn">
+          [disabled]="nameGroup.invalid">
           Add
         </button>
-        <button (click)="hideForm()" class="group__btn">Cancel</button>
-        <div
+        <button (click)="hideForm()">Cancel</button>
+      </form>
+      <div
           *ngIf="nameGroup.invalid && (nameGroup.dirty || nameGroup.touched)"
           class="group__error-container">
           <span
@@ -68,31 +62,30 @@
             >The name must contain only letters, numbers, or spaces</span
           >
         </div>
-      </form>
     </div>
   </div>
-  <div class="group__main">
-    <ul *ngIf="groupList$ | async as groupList" class="group__list">
-      <li *ngFor="let item of groupList" class="group__item">
-        <a [routerLink]="'/group/' + item.id.S" class="group__link">{{
+  <div class="field">
+    <ul *ngIf="groupList$ | async as groupList" class="field__list">
+      <li *ngFor="let item of groupList">
+        <a [routerLink]="'/group/' + item.id.S">{{
           item.name.S
         }}</a>
         <button
-          class="group__btn_delete"
           type="button"
           *ngIf="item.createdBy.S === currentUid && !isShowDeleteGroup"
           (click)="deleteGroup()">
-          <div class="group__btn-delete-img"></div>
+          <div class="img-delete"></div>
         </button>
+
         <div
-          class="group__popup-delete"
+          class="popup-delete"
           *ngIf="item.createdBy.S === currentUid && isShowDeleteGroup">
           <p>Are you sure?</p>
-          <div class="group__popup-box-btn">
-            <button (click)="confirmDeleteGroup(item.id.S)" class="group__btn">
+          <div class="popup-delete__box-btn">
+            <button (click)="confirmDeleteGroup(item.id.S)" class="popup-delete__btn">
               Yes
             </button>
-            <button (click)="noConfirmDeleteGroup()" class="group__btn">
+            <button (click)="noConfirmDeleteGroup()" class="popup-delete__btn">
               No
             </button>
           </div>
