@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 html, body { height: 100%; }
 body {
     margin: 0;
@@ -12,8 +17,21 @@ p {
     padding: 0;
 }
 
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    border: none
+}
+
 $background-color: #E5E5E5;
+$background-color-main: #DCDCDC;
+$background-color-message: rgb(211, 250, 237);
+$background-color-popup: rgb(201, 198, 198);
 $form-background: #F2F2F2;
+$form-background-dark: #293133;
 $input-background: #E0E0E0;
 $input-color: #EFEFEF;
 $blue-color: #2F80ED;
@@ -23,4 +41,124 @@ $white-color: #FFFFFF;
 $font-grey: #828282;
 $red: #ff0000;
 $black: #000000;
+$black-light: rgb(0, 0, 0, .2);
+$color-companions: rgb(183, 252, 183);
+
+$icon-update: url('../../../../assets/icon-group-update.png');
+$icon-user: url('../../../../assets/icon-user.png');
+$icon-add: url('../../../../assets/icon-add-group.png');
+$icon-delete: url('../../../../assets/icons-group-delete.png');
+$size-img-user: 30px;
+
+@mixin box-shadow($color) {
+    box-shadow: 5px 0px 3px $color;
+}
+
+@mixin font-size-weigh($size, $weigh) {
+    font-size: $size;
+    font-weight: $weigh;
+}
+
+%flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+%flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+%button-link {
+    background: transparent;
+    height: 20px;
+    color: $blue-color;
+    padding: 0 0 2px 5px;
+}
+
+%input-text {
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    background-color: $input-background;
+}
+
+@mixin position-absolute-left($top, $left) {
+    position: absolute;
+    top: $top;
+    left: $left;
+}
+
+@mixin position-absolute-right($top, $right) {
+    position: absolute;
+    top: $top;
+    right: $right;
+}
+
+@mixin background-size($size){
+    background-size: $size $size;
+    width: $size;
+    height: $size;
+}
+
+@mixin form($theme-form, $color-form ) {
+    @extend %flex-column;
+    width: 30%;
+    min-width: 350px;
+    height: max-content;
+    background-color: $theme-form;
+    color: $color-form;
+    padding: 25px 20px;
+    margin: 100px auto;
+    border-radius: 8px;
+}
+
+@mixin btn-hover($color) {
+    background-color: darken($color, 20%);
+    @include box-shadow(darken($color, 20%));
+}
+
+@mixin details($background, $color) {
+    width: 80%;
+    height: 730px;
+    margin: 20px auto;
+    background-color: $background;
+    border-radius: 15px;
+    padding: 20px;
+    @extend %flex-column;
+    gap: 20px;
+    position: relative;
+    color: $color;
+}
+
+%box {
+    @extend %flex;
+    gap: 15px;
+    justify-content: flex-start;
+    @include font-size-weigh(1rem, 500);
+    border-bottom: 1px solid $black-light;
+}
+
+%btn-form {
+    width: 124px;
+    height: 40px;
+    @include font-size-weigh(.75rem, 400);
+    @include box-shadow($blue-color);
+    margin: 30px 0 0 0;
+    border-radius: 5px;
+    align-self: flex-end;
+    color: $white-color;
+    background-color: $blue-color;
+    transition: .5s;
+
+    &:hover {
+        background-color: darken($blue-color, 10%);
+        @include btn-hover($blue-color);
+    }
+    &:disabled {
+        background-color: $font-grey;
+        @include box-shadow($font-grey);
+    }
+}
 
